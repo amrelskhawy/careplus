@@ -44,17 +44,38 @@ export const PatientForm = () => {
           <p className="text-dark-700">Schedule your first appointment.</p>
         </section>
 
-        {/* Username Input */}
+        {/* Full Name Input */}
         <CutomFormField 
           control={form.control}
-          name={'username'}
-          label={"Username"}
+          name={'name'}
+          label={"Full Name"}
           fieldType={FormFieldType.INPUT}
-          placeholder={""}
-          desc={""} 
+          placeholder={"John Doe"}
           iconSrc={"user.svg"} 
-          iconAlt={""}          
-          />
+          iconAlt={"user"}          
+        />
+
+        {/* Full Name Input */}
+        <CutomFormField 
+          control={form.control}
+          name={'email'}
+          label={"Email"}
+          fieldType={FormFieldType.INPUT}
+          placeholder={"johndoe@example.com"}
+          iconSrc={"email.svg"} 
+          iconAlt={"email"}          
+        />
+
+        {/* Full Name Input */}
+        <CutomFormField 
+          control={form.control}
+          name={'phone'}
+          label={"Phone"}
+          fieldType={FormFieldType.PHONE_INPUT}
+          placeholder={"(+20) 103 4567 890"}
+          iconSrc={"phone.svg"} 
+          iconAlt={"phone"}          
+        />
 
         <Button type="submit">Submit</Button>
       </form>
