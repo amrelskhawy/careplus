@@ -3,14 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "../ui/button"
 import { Form } from "@/components/ui/form"
 import { CutomFormField } from "../CutomFormField"
 import { useState } from "react"
 import { SubmitButton } from "../SubmitButton"
+import { UserFormValidation } from "@/lib/validators"
 
 export enum FormFieldType {
-  INPUT = "input" ,
+  INPUT = "input",
   CHECKBOX = "checkbox",
   TEXTAREA = "textarea",
   DATE_PIKER = "datePicker",
@@ -19,27 +19,30 @@ export enum FormFieldType {
   SKELETON = "skeleton"
 }
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message : "username should be 2 letters or more"
-  }).max(50)
-})
 
 export const PatientForm = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      username: ""
+      name: "",
+      email: "",
+      phone: ""
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    
+  async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
+    setIsLoading(true)
+
+    try {
+      const userData = { name, email, phone }
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   return (
@@ -51,40 +54,41 @@ export const PatientForm = () => {
         </section>
 
         {/* Full Name Input */}
-        <CutomFormField 
+        <CutomFormField
           control={form.control}
           name={'name'}
           label={"Full Name"}
           fieldType={FormFieldType.INPUT}
           placeholder={"John Doe"}
-          iconSrc={"user.svg"} 
-          iconAlt={"user"}          
+          iconSrc={"user.svg"}
+          iconAlt={"user"}
         />
 
         {/* Full Name Input */}
-        <CutomFormField 
+        <CutomFormField
           control={form.control}
           name={'email'}
           label={"Email"}
           fieldType={FormFieldType.INPUT}
           placeholder={"johndoe@example.com"}
-          iconSrc={"email.svg"} 
-          iconAlt={"email"}          
+          iconSrc={"email.svg"}
+          iconAlt={"email"}
         />
 
         {/* Full Name Input */}
-        <CutomFormField 
+        <CutomFormField
           control={form.control}
           name={'phone'}
           label={"Phone"}
           fieldType={FormFieldType.PHONE_INPUT}
           placeholder={"(+20) 103 4567 890"}
-          iconSrc={"phone.svg"} 
-          iconAlt={"phone"}          
+          iconSrc={"phone.svg"}
+          iconAlt={"phone"}
         />
 
         <SubmitButton
           isLoading={isLoading}
+          onClick={() => onSubmit()}
         >
           Get Started
         </SubmitButton>
