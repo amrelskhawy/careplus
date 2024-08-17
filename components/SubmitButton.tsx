@@ -5,16 +5,18 @@ import Image from 'next/image'
 interface SubmitBtnProps {
   isLoading: boolean
   className?: string
+  onClick: () => void
   children?: React.ReactNode
 }
 
 export const SubmitButton = ({
-isLoading, className, children
+isLoading, className, children, onClick
 }: SubmitBtnProps) => {
   return (
     <Button
       type='submit'
       disabled={isLoading}
+      onClick={onClick}
       className={className ?? "shad-primary-btn w-full"}
     >
       {isLoading ? (
